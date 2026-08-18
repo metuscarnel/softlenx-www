@@ -1,0 +1,320 @@
+---
+import logoDesktopSrc from '../assets/logos/sl-softlenx-logo.svg';
+import logoMobileSrc from '../assets/logos/sl-logo.svg';
+---
+<header id="main-header">
+  <div class="container header-container">
+    <a href="/" class="header-logo" aria-label="Retour à l'accueil de Softlenx">
+      <img src={logoDesktopSrc.src} alt="Softlenx" class="logo-desktop" />
+      <img src={logoMobileSrc.src} alt="Softlenx" class="logo-mobile" />
+    </a>
+    <nav class="header-nav" id="header-nav">
+      <ul>
+        <li><a href="#mission">La mission</a></li>
+        <li><a href="#demarche">La démarche</a></li>
+        <li><a href="#thematiques">Les thématiques</a></li>
+        <li><a href="#exigences">Nos exigences</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="#suivre" class="cta-button header-cta">Nous suivre</a>
+      <button id="menu-toggle" class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="header-nav">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('main-header');
+  const menuToggle = document.getElementById('menu-toggle');
+  const nav = document.getElementById('header-nav');
+
+  // Style du header au scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  function closeMenu() {
+    document.body.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+  }
+
+  // Gestion du menu mobile
+  menuToggle.addEventListener('click', () => {
+    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      document.body.classList.add('menu-open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Fermer le menu');
+    }
+  });
+
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>
+
+<style>
+  #main-header {
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: var(--space-sm) 0;
+    background-color: transparent;
+    transition: background-color var(--transition-medium), box-shadow var(--transition-medium), padding var(--transition-medium);
+  }
+
+  #main-header.scrolled {
+    background-color: rgba(247, 245, 240, 0.9);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(16, 42, 67, 0.05);
+    padding: var(--space-xs) 0;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-logo {
+    display: inline-flex;
+    align-items: center;
+    transition: opacity var(--transition-fast);
+  }
+
+  .header-logo img {
+    display: block;
+    width: auto;
+  }
+
+  .header-logo .logo-desktop {
+    height: 60px;
+  }
+
+  .header-logo .logo-mobile {
+    display: none;
+    height: 38px;
+  }
+
+  .header-logo:hover { opacity: 0.8; }
+
+  .header-nav ul {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+  }
+
+  .header-nav a {
+    font-size: 1rem;
+    font-weight: 700;
+    position: relative;
+    padding: var(--space-xs) 0;
+  }
+
+  .header-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-accent-primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-fast);
+  }
+
+  .header-nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .menu-toggle { display: none; }
+
+  /* --- Styles Mobile --- */
+  @media (max-width: 1024px) {
+    .header-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-ink-navy);
+      color: var(--color-paper);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+    }
+
+    :global(body.menu-open) .header-nav {
+      transform: translateX(0);
+    }
+
+    .header-nav ul {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--space-md);
+    }
+
+    .header-nav a {
+      font-size: 2rem;
+      font-family: var(--font-serif);
+      transition: color var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+      opacity: 0.8;
+    }
+
+    .header-nav a:hover,
+    .header-nav a:focus-visible {
+      color: var(--color-accent-primary);
+      opacity: 1;
+      transform: translateX(10px);
+    }
+
+    .header-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-accent-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-fast);
+    }
+
+    .header-nav a:hover::after,
+    .header-nav a:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    .header-cta { display: none; }
+
+    .header-logo .logo-desktop {
+      display: none;
+    }
+
+    .header-logo .logo-mobile {
+      display: block;
+      height: 40px;
+    }
+
+    .menu-toggle {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 28px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle .line {
+      width: 100%;
+      height: 3px;
+      background-color: var(--color-text);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    :global(body.menu-open) .menu-toggle .line {
+      background-color: var(--color-paper);
+    }
+
+    :global(body.menu-open) .menu-toggle .line:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    :global(body.menu-open) .menu-toggle .line:nth-child(2) {
+      opacity: 0;
+    }
+    :global(body.menu-open) .menu-toggle .line:nth-child(3) {
+      transform: translateY(-11px) rotate(-45deg);
+    }
+  }
+
+  .back-to-top {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--color-accent-primary);
+    color: var(--color-paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 30px rgba(15, 159, 168, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity var(--transition-medium), transform var(--transition-medium), visibility var(--transition-medium);
+    z-index: 1200;
+    cursor: pointer;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .back-to-top:hover {
+    background-color: var(--color-ink-navy);
+  }
+
+  .back-to-top svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: currentColor;
+  }
+
+  @media (max-width: 768px) {
+    .back-to-top {
+      right: 1rem;
+      bottom: 1rem;
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+  }
+</style>
+
+<button class="back-to-top" type="button" aria-label="Remonter en haut">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script>
+  const backToTopButton = document.querySelector('.back-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopButton.classList.add('visible');
+    } else {
+      backToTopButton.classList.remove('visible');
+    }
+  });
+
+  backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>

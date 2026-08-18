@@ -1,0 +1,60 @@
+<section id="mission" class="section">
+  <div class="container mission-container fade-in-up">
+    <div class="mission-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Rendre la socioéconomie accessible.</h2>
+    </div>
+    <div class="mission-content">
+      <p class="lead-text">Nous démocratisons l’information sur la conjoncture socioéconomique du Bénin et ses implications dans le quotidien des Béninoises et des Béninois.</p>
+      <p>Notre objectif est de rendre accessibles les informations qui permettent de mieux comprendre le pays.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mission-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .mission-header {
+    position: sticky;
+    top: 8rem; /* Aligné avec le scroll-padding */
+  }
+
+  .section-number {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent-secondary);
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .mission-content .lead-text {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    line-height: 1.4;
+    margin-bottom: var(--space-lg);
+  }
+
+  .mission-content p {
+    max-width: 45ch;
+  }
+
+  @media (max-width: 900px) {
+    .mission-container {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .mission-header {
+      position: static;
+    }
+  }
+</style>

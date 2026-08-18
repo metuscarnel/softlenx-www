@@ -1,0 +1,83 @@
+<section id="demarche" class="section">
+  <div class="container fade-in-up">
+    <div class="demarche-intro">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Connaître un chiffre, c’est bien.<br>Le comprendre, c’est encore mieux.</h2>
+      <p>Un chiffre donne une information. Il ne donne pas toujours les clés pour être compris. Nous cherchons à replacer les données dans leur contexte, à les éclaircir avec rigueur et à mettre en lumière leurs implications.</p>
+    </div>
+    <div class="demarche-grid">
+      <div class="demarche-item">
+        <span class="item-number">01</span>
+        <h3 class="item-title">Contexte</h3>
+        <p>Replacer les données dans leur contexte pour comprendre ce qu’elles mesurent et comment elles évoluent.</p>
+      </div>
+      <div class="demarche-item">
+        <span class="item-number">02</span>
+        <h3 class="item-title">Compréhension</h3>
+        <p>Éclaircir les faits et les indicateurs avec clarté, sans simplification abusive.</p>
+      </div>
+      <div class="demarche-item">
+        <span class="item-number">03</span>
+        <h3 class="item-title">Implication</h3>
+        <p>Mettre en lumière les implications des indicateurs dans le quotidien des Béninoises et des Béninois.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #demarche {
+    background-color: var(--color-ink-navy);
+    color: var(--color-paper);
+  }
+
+  .demarche-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--space-xxl);
+  }
+
+  .demarche-intro .section-title {
+    margin-bottom: var(--space-md);
+  }
+
+  .demarche-intro p {
+    font-size: 1.25rem;
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .demarche-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .demarche-item {
+    border-top: 2px solid var(--color-accent-secondary);
+    padding-top: var(--space-md);
+  }
+
+  .item-number {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    color: var(--color-accent-secondary);
+    margin-bottom: var(--space-sm);
+    display: block;
+  }
+
+  .item-title {
+    font-size: 1.75rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  @media (max-width: 768px) {
+    .demarche-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+    .demarche-intro {
+      margin-bottom: var(--space-xl);
+    }
+  }
+</style>
