@@ -17,7 +17,10 @@ import logoMobileSrc from '../assets/logos/sl-logo.svg';
       </ul>
     </nav>
     <div class="header-actions">
-      <a href="#suivre" class="cta-button header-cta">Nous suivre</a>
+      <a href="#suivre" class="cta-button header-cta">
+        <span>Nous suivre</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
       <button id="menu-toggle" class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="header-nav">
         <span class="line"></span>
         <span class="line"></span>
@@ -109,6 +112,38 @@ import logoMobileSrc from '../assets/logos/sl-logo.svg';
   }
 
   .header-logo:hover { opacity: 0.8; }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .header-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(16, 42, 67, 0.2);
+    background-color: transparent;
+    color: var(--color-text);
+    font-weight: 700;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .header-cta svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    stroke: currentColor;
+  }
+
+  .header-cta:hover {
+    background-color: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+    color: var(--color-paper);
+    transform: translateY(-1px);
+  }
 
   .header-nav ul {
     display: flex;
