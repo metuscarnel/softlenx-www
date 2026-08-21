@@ -1,0 +1,252 @@
+<aside class="data-visual-showcase" aria-label="Aperçu visuel de formats d'infographies">
+  <div class="showcase-frame">
+    <svg viewBox="0 0 520 340" role="img" aria-labelledby="viz-title viz-desc">
+      <title id="viz-title">Composition décorative de visualisations</title>
+      <desc id="viz-desc">Courbe, barres, répartition circulaire et points animés. Données fictives.</desc>
+
+      <g class="grid-lines" aria-hidden="true">
+        <line x1="32" y1="72" x2="340" y2="72" />
+        <line x1="32" y1="124" x2="340" y2="124" />
+        <line x1="32" y1="176" x2="340" y2="176" />
+        <line x1="32" y1="228" x2="340" y2="228" />
+      </g>
+
+      <g class="bars" aria-hidden="true">
+        <rect x="56" y="202" width="22" height="38" rx="4" />
+        <rect x="98" y="178" width="22" height="62" rx="4" />
+        <rect x="140" y="156" width="22" height="84" rx="4" />
+        <rect x="182" y="188" width="22" height="52" rx="4" />
+        <rect x="224" y="146" width="22" height="94" rx="4" />
+      </g>
+
+      <g class="line-chart" aria-hidden="true">
+        <path class="line-main" d="M44 196 C84 170, 104 176, 136 150 C166 126, 188 138, 216 116 C244 96, 286 108, 322 84" />
+        <circle cx="44" cy="196" r="3.5" />
+        <circle cx="136" cy="150" r="3.5" />
+        <circle cx="216" cy="116" r="3.5" />
+        <circle cx="322" cy="84" r="3.5" />
+      </g>
+
+      <g class="floating-points" aria-hidden="true">
+        <circle cx="368" cy="58" r="5" />
+        <circle cx="334" cy="278" r="4" />
+        <circle cx="272" cy="54" r="3.5" />
+        <circle cx="84" cy="94" r="4" />
+      </g>
+    </svg>
+  </div>
+  <ul class="theme-cloud" aria-hidden="true">
+    <li class="theme-tag tag-eco">economie</li>
+    <li class="theme-tag tag-sante">sante</li>
+    <li class="theme-tag tag-education">education</li>
+    <li class="theme-tag tag-emploi">emploi</li>
+    <li class="theme-tag tag-prix">prix</li>
+    <li class="theme-tag tag-energie">energie</li>
+  </ul>
+</aside>
+
+<style>
+  .data-visual-showcase {
+    position: relative;
+    width: min(540px, 100%);
+    margin-inline: auto;
+  }
+
+  .showcase-frame {
+    background: transparent;
+    padding: 0.5rem;
+  }
+
+  svg {
+    width: 100%;
+    height: auto;
+    background-color: rgba(247, 245, 240, 0.46);
+  }
+
+  .theme-cloud {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+    pointer-events: none;
+  }
+
+  .theme-tag {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(16, 42, 67, 0.84);
+    background: rgba(247, 245, 240, 0.9);
+    padding: 0.22rem 0.42rem;
+    animation: tag-drift 13s ease-in-out infinite;
+  }
+
+  .tag-eco {
+    top: 8%;
+    left: -5%;
+    transform: rotate(-6deg);
+    color: rgba(15, 159, 168, 0.95);
+  }
+
+  .tag-sante {
+    top: -4%;
+    right: 11%;
+    transform: rotate(4deg);
+    animation-delay: 1.2s;
+  }
+
+  .tag-education {
+    top: 37%;
+    right: -7%;
+    transform: rotate(-4deg);
+    color: rgba(197, 138, 24, 0.96);
+    animation-delay: 2.3s;
+  }
+
+  .tag-emploi {
+    bottom: 14%;
+    left: -7%;
+    transform: rotate(5deg);
+    animation-delay: 3.4s;
+  }
+
+  .tag-prix {
+    bottom: -4%;
+    left: 30%;
+    transform: rotate(-3deg);
+    animation-delay: 1.8s;
+  }
+
+  .tag-energie {
+    bottom: 6%;
+    right: -5%;
+    transform: rotate(6deg);
+    color: rgba(15, 159, 168, 0.95);
+    animation-delay: 2.8s;
+  }
+
+  .grid-lines line {
+    stroke: rgba(16, 42, 67, 0.16);
+    stroke-width: 1;
+  }
+
+  .bars rect {
+    fill: rgba(197, 138, 24, 0.7);
+    transform-origin: bottom;
+    animation: bars-breathe 7s ease-in-out infinite;
+  }
+
+  .bars rect:nth-child(2) { animation-delay: 0.4s; }
+  .bars rect:nth-child(3) { animation-delay: 0.8s; }
+  .bars rect:nth-child(4) { animation-delay: 1.2s; }
+  .bars rect:nth-child(5) { animation-delay: 1.6s; }
+
+  .line-chart .line-main {
+    fill: none;
+    stroke: var(--color-accent-primary);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 430;
+    stroke-dashoffset: 430;
+    animation: line-draw 9s ease-in-out infinite;
+  }
+
+  .line-chart circle {
+    fill: var(--color-paper);
+    stroke: var(--color-accent-primary);
+    stroke-width: 2;
+    animation: point-pulse 6s ease-in-out infinite;
+  }
+
+  .line-chart circle:nth-child(3) { animation-delay: 0.8s; }
+  .line-chart circle:nth-child(4) { animation-delay: 1.6s; }
+  .line-chart circle:nth-child(5) { animation-delay: 2.4s; }
+
+  .floating-points circle {
+    fill: var(--color-accent-primary);
+    opacity: 0.65;
+    animation: drift 10s ease-in-out infinite;
+  }
+
+  .floating-points circle:nth-child(2) {
+    fill: var(--color-accent-secondary);
+    animation-delay: 1.7s;
+  }
+
+  .floating-points circle:nth-child(3) {
+    fill: rgba(16, 42, 67, 0.7);
+    animation-delay: 3.4s;
+  }
+
+  .floating-points circle:nth-child(4) {
+    animation-delay: 5.1s;
+  }
+
+  @keyframes line-draw {
+    0% { stroke-dashoffset: 430; }
+    40% { stroke-dashoffset: 0; }
+    70% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -50; }
+  }
+
+  @keyframes bars-breathe {
+    0%, 100% { transform: scaleY(0.92); }
+    50% { transform: scaleY(1.04); }
+  }
+
+  @keyframes point-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.22); }
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-8px) translateX(3px); }
+  }
+
+  @keyframes tag-drift {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -4px; }
+  }
+
+  @media (max-width: 900px) {
+    .showcase-frame {
+      padding: 0.4rem;
+    }
+
+    .theme-tag {
+      font-size: 0.72rem;
+    }
+
+    .line-chart .line-main {
+      stroke-width: 2.5;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .theme-cloud {
+      display: none;
+    }
+
+    .floating-points circle:nth-child(3),
+    .floating-points circle:nth-child(4) {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bars rect,
+    .line-chart .line-main,
+    .line-chart circle,
+    .floating-points circle,
+    .theme-tag {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
