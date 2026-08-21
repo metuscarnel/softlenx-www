@@ -8,15 +8,15 @@ import logoSrc from '../assets/logos/sl-softlenx-logo.svg';
     </a>
     <nav class="header-nav" id="header-nav">
       <ul>
-        <li><a href="#mission">La mission</a></li>
-        <li><a href="#demarche">La démarche</a></li>
-        <li><a href="#thematiques">Les thématiques</a></li>
-        <li><a href="#exigences">Nos exigences</a></li>
-        <li><a href="#suivre">Nos infographies</a></li>
+        <li><a href="/#mission">La mission</a></li>
+        <li><a href="/#demarche">La démarche</a></li>
+        <li><a href="/#thematiques">Les thématiques</a></li>
+        <li><a href="/#exigences">Nos exigences</a></li>
+        <li><a href="/infographies">Nos infographies</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <a href="#suivre" class="cta-button header-cta">
+      <a href="/#suivre" class="cta-button header-cta">
         <span>Nous suivre</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -34,36 +34,43 @@ import logoSrc from '../assets/logos/sl-softlenx-logo.svg';
   const menuToggle = document.getElementById('menu-toggle');
   const nav = document.getElementById('header-nav');
 
-  // Style du header au scroll
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  });
-
-  function closeMenu() {
-    document.body.classList.remove('menu-open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+  if (header) {
+    // Style du header au scroll
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
   }
 
-  // Gestion du menu mobile
-  menuToggle.addEventListener('click', () => {
-    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    if (isExpanded) {
-      closeMenu();
-    } else {
-      document.body.classList.add('menu-open');
-      menuToggle.setAttribute('aria-expanded', 'true');
-      menuToggle.setAttribute('aria-label', 'Fermer le menu');
-    }
-  });
+  if (menuToggle && nav) {
+    const toggle = menuToggle;
+    const navMenu = nav;
 
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
+    function closeMenu() {
+      document.body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Ouvrir le menu');
+    }
+
+    // Gestion du menu mobile
+    toggle.addEventListener('click', () => {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        closeMenu();
+      } else {
+        document.body.classList.add('menu-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Fermer le menu');
+      }
+    });
+
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  }
 </script>
 
 <style>
@@ -324,18 +331,20 @@ import logoSrc from '../assets/logos/sl-softlenx-logo.svg';
 <script>
   const backToTopButton = document.querySelector('.back-to-top');
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backToTopButton.classList.add('visible');
-    } else {
-      backToTopButton.classList.remove('visible');
-    }
-  });
-
-  backToTopButton.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (backToTopButton instanceof HTMLElement) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
     });
-  });
+
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 </script>

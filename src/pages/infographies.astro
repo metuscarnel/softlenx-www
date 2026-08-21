@@ -1,0 +1,582 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const benin9Entries = Object.entries(
+  import.meta.glob('../../content/benin9/*.{png,jpg,jpeg,webp}', {
+    eager: true,
+    import: 'default'
+  })
+) as Array<[string, string | { src: string }]>;
+
+const benin9Images = benin9Entries
+  .sort(([pathA], [pathB]) => {
+    const fileA = pathA.split('/').pop() ?? '';
+    const fileB = pathB.split('/').pop() ?? '';
+    const numA = Number.parseInt(fileA, 10);
+    const numB = Number.parseInt(fileB, 10);
+    if (Number.isNaN(numA) || Number.isNaN(numB)) {
+      return fileA.localeCompare(fileB);
+    }
+    return numA - numB;
+  })
+  .map(([, src], index) => ({
+    src: typeof src === 'string' ? src : src.src,
+    alt: `Le Benin en 9 chiffres - visuel ${index + 1}`
+  }));
+---
+
+<Layout title="Softlenx · Nos infographies">
+  <Header />
+  <main>
+    <section class="section infographies-hero">
+      <div class="container">
+        <p class="infographies-kicker">Collection Softlenx</p>
+        <h1>Nos infographies</h1>
+        <p class="infographies-intro">
+          Retrouvez ici nos publications visuelles pour lire l'actualite socioeconomique autrement.
+        </p>
+      </div>
+    </section>
+
+    <section class="section infographies-listing">
+      <div class="container cards-grid">
+        <article class="info-card fade-in-up">
+          <p class="info-topic">Economie</p>
+          <h2>Structure des prix et pouvoir d'achat</h2>
+          <p>Publication a venir.</p>
+        </article>
+
+        <article class="info-card fade-in-up">
+          <p class="info-topic">Sante</p>
+          <h2>Acces aux soins et dynamique territoriale</h2>
+          <p>Publication a venir.</p>
+        </article>
+
+        <article class="info-card fade-in-up">
+          <p class="info-topic">Education</p>
+          <h2>Parcours scolaires et opportunites</h2>
+          <p>Publication a venir.</p>
+        </article>
+
+        <article class="info-card fade-in-up">
+          <p class="info-topic">Emploi</p>
+          <h2>Marches du travail et transformations</h2>
+          <p>Publication a venir.</p>
+        </article>
+
+        <article class="info-card fade-in-up">
+          <p class="info-topic">Energie</p>
+          <h2>Consommations, couts et transitions</h2>
+          <p>Publication a venir.</p>
+        </article>
+
+        <article class="info-card fade-in-up">
+          <p class="info-topic">Societe</p>
+          <h2>Le Benin en 9 chiffres</h2>
+          <p>Disponible maintenant.</p>
+          <a class="info-link" href="#benin-9">Voir l'infographie</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="benin-9" class="section benin9-section">
+      <div class="container">
+        <div class="benin9-head fade-in-up">
+          <p class="infographies-kicker">Societe</p>
+          <h2>Le Benin en 9 chiffres</h2>
+          <p class="benin9-intro">
+            Premiere infographie de la serie Societe, ce format propose une lecture rapide de grands reperes.
+            Les visuels ci-dessous se parcourent en carrousel.
+          </p>
+        </div>
+
+        {benin9Images.length > 0 ? (
+          <div class="benin9-carousel fade-in-up" data-carousel tabindex="0" aria-label="Carrousel Le Benin en 9 chiffres">
+            <button class="carousel-btn carousel-prev" type="button" aria-label="Image precedente" data-prev>
+              <span aria-hidden="true">&#8592;</span>
+            </button>
+
+            <div class="carousel-viewport" data-viewport>
+              <div class="carousel-track" aria-live="polite" data-track>
+                {benin9Images.map((image, index) => (
+                  <figure class:list={["carousel-slide", index === 0 && 'is-active']} data-slide>
+                    <img src={image.src} alt={image.alt} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+                  </figure>
+                ))}
+              </div>
+            </div>
+
+            <button class="carousel-btn carousel-next" type="button" aria-label="Image suivante" data-next>
+              <span aria-hidden="true">&#8594;</span>
+            </button>
+
+            <div class="carousel-meta">
+              <p class="carousel-count" data-count>1 / {benin9Images.length}</p>
+              <div class="carousel-dots" role="tablist" aria-label="Selection des visuels">
+                {benin9Images.map((_, index) => (
+                  <button
+                    class:list={["carousel-dot", index === 0 && 'is-active']}
+                    type="button"
+                    aria-label={`Aller au visuel ${index + 1}`}
+                    aria-selected={index === 0 ? 'true' : 'false'}
+                    role="tab"
+                    data-dot={index}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p class="benin9-empty">Aucun visuel trouve dans content/benin9.</p>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const carousels = document.querySelectorAll('[data-carousel]');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  carousels.forEach((carousel) => {
+    if (!(carousel instanceof HTMLElement)) {
+      return;
+    }
+
+    const carouselEl = carousel;
+    const slides = Array.from(carousel.querySelectorAll('[data-slide]'));
+    const dots = Array.from(carousel.querySelectorAll('[data-dot]'));
+    const viewport = carousel.querySelector('[data-viewport]');
+    const track = carousel.querySelector('[data-track]');
+    const prevButton = carousel.querySelector('[data-prev]');
+    const nextButton = carousel.querySelector('[data-next]');
+    const count = carousel.querySelector('[data-count]');
+
+    if (!(prevButton instanceof HTMLButtonElement) || !(nextButton instanceof HTMLButtonElement) || !(count instanceof HTMLElement) || !(viewport instanceof HTMLElement) || !(track instanceof HTMLElement) || slides.length === 0) {
+      return;
+    }
+
+    let currentIndex = 0;
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let isTouchDragging = false;
+    let autoplayIntervalId: number | undefined;
+
+    const swipeThreshold = 45;
+    const autoplayDelay = 6400;
+
+    const updateCarousel = (nextIndex: number) => {
+      currentIndex = (nextIndex + slides.length) % slides.length;
+
+      track.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('is-active', index === currentIndex);
+      });
+
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('is-active', index === currentIndex);
+        dot.setAttribute('aria-selected', index === currentIndex ? 'true' : 'false');
+      });
+
+      count.textContent = `${currentIndex + 1} / ${slides.length}`;
+    };
+
+    prevButton.addEventListener('click', () => {
+      updateCarousel(currentIndex - 1);
+    });
+
+    nextButton.addEventListener('click', () => {
+      updateCarousel(currentIndex + 1);
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        updateCarousel(index);
+      });
+    });
+
+    const onKeyDown = (event: Event) => {
+      if (!(event instanceof KeyboardEvent)) {
+        return;
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        updateCarousel(currentIndex - 1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        updateCarousel(currentIndex + 1);
+      }
+
+      if (event.key === 'Home') {
+        event.preventDefault();
+        updateCarousel(0);
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault();
+        updateCarousel(slides.length - 1);
+      }
+    };
+
+    const stopAutoplay = () => {
+      if (autoplayIntervalId !== undefined) {
+        window.clearInterval(autoplayIntervalId);
+        autoplayIntervalId = undefined;
+      }
+    };
+
+    const startAutoplay = () => {
+      if (prefersReducedMotion || slides.length < 2 || autoplayIntervalId !== undefined) {
+        return;
+      }
+
+      autoplayIntervalId = window.setInterval(() => {
+        updateCarousel(currentIndex + 1);
+      }, autoplayDelay);
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      if (event.touches.length !== 1) {
+        return;
+      }
+      stopAutoplay();
+      isTouchDragging = true;
+      touchStartX = event.touches[0].clientX;
+      touchCurrentX = touchStartX;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (!isTouchDragging || event.touches.length !== 1) {
+        return;
+      }
+      touchCurrentX = event.touches[0].clientX;
+    };
+
+    const onTouchEnd = () => {
+      if (!isTouchDragging) {
+        return;
+      }
+
+      const deltaX = touchCurrentX - touchStartX;
+      if (Math.abs(deltaX) > swipeThreshold) {
+        if (deltaX > 0) {
+          updateCarousel(currentIndex - 1);
+        } else {
+          updateCarousel(currentIndex + 1);
+        }
+      }
+
+      isTouchDragging = false;
+      startAutoplay();
+    };
+
+    viewport.addEventListener('touchstart', onTouchStart, { passive: true });
+    viewport.addEventListener('touchmove', onTouchMove, { passive: true });
+    viewport.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    carouselEl.addEventListener('keydown', onKeyDown);
+    carouselEl.addEventListener('mouseenter', stopAutoplay);
+    carouselEl.addEventListener('mouseleave', startAutoplay);
+    carouselEl.addEventListener('focusin', stopAutoplay);
+    carouselEl.addEventListener('focusout', () => {
+      const active = document.activeElement;
+      if (!active || !carouselEl.contains(active)) {
+        startAutoplay();
+      }
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopAutoplay();
+      } else {
+        startAutoplay();
+      }
+    });
+
+    if (prefersReducedMotion) {
+      track.style.transition = 'none';
+    }
+
+    updateCarousel(0);
+    startAutoplay();
+  });
+</script>
+
+<style>
+  .infographies-hero {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-lg);
+  }
+
+  .infographies-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .infographies-hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    margin-bottom: var(--space-sm);
+  }
+
+  .infographies-intro {
+    max-width: 720px;
+    font-size: 1.15rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .info-card {
+    border: 1px solid var(--color-border);
+    padding: 1.1rem;
+    background: rgba(247, 245, 240, 0.55);
+  }
+
+  .info-topic {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-secondary);
+    margin-bottom: 0.55rem;
+  }
+
+  .info-card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .info-card p {
+    font-size: 1rem;
+  }
+
+  .info-link {
+    display: inline-block;
+    margin-top: 0.7rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-accent-primary);
+    border-bottom: 1px solid currentColor;
+  }
+
+  .benin9-section {
+    padding-top: 0;
+  }
+
+  .benin9-head {
+    margin-bottom: var(--space-md);
+  }
+
+  .benin9-head h2 {
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .benin9-intro {
+    max-width: 68ch;
+    font-size: 1.05rem;
+  }
+
+  .benin9-carousel {
+    position: relative;
+    width: min(100%, clamp(680px, 72vw, 760px));
+    margin-inline: auto;
+    padding: 0.65rem 0.65rem 0.85rem;
+    background: #F7F5F0;
+    border-radius: 10px;
+    outline: none;
+  }
+
+  .benin9-carousel:focus-visible {
+    box-shadow: inset 0 0 0 2px rgba(15, 159, 168, 0.45);
+  }
+
+  .carousel-viewport {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 940 / 788;
+    background: #F7F5F0;
+    border-radius: 10px;
+    touch-action: pan-y;
+  }
+
+  .carousel-track {
+    height: 100%;
+    display: flex;
+    transform: translate3d(0, 0, 0);
+    transition: transform 390ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: transform;
+  }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.72;
+    transition: opacity 390ms ease;
+  }
+
+  .carousel-slide.is-active {
+    opacity: 1;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin-inline: auto;
+    image-rendering: auto;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    z-index: 2;
+    width: 2.15rem;
+    height: 2.15rem;
+    border: 1px solid rgba(16, 42, 67, 0.25);
+    background: rgba(247, 245, 240, 0.88);
+    color: var(--color-text);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    border-radius: 999px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease, color 220ms ease, border-color 220ms ease;
+  }
+
+  .carousel-prev {
+    left: 0.35rem;
+  }
+
+  .carousel-next {
+    right: 0.35rem;
+  }
+
+  .carousel-btn:hover {
+    border-color: var(--color-accent-primary);
+    color: var(--color-accent-primary);
+  }
+
+  .benin9-carousel:hover .carousel-btn,
+  .benin9-carousel:focus-within .carousel-btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .carousel-meta {
+    margin-top: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .carousel-count {
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .carousel-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .carousel-dot {
+    width: 0.62rem;
+    height: 0.62rem;
+    border-radius: 999px;
+    border: 1px solid rgba(16, 42, 67, 0.46);
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 220ms ease, border-color 220ms ease;
+  }
+
+  .carousel-dot.is-active {
+    background: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+  }
+
+  .benin9-empty {
+    border: 1px solid var(--color-border);
+    padding: 1rem;
+  }
+
+  @media (max-width: 1000px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .infographies-hero {
+      padding-top: var(--space-lg);
+    }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .benin9-carousel {
+      width: 100%;
+      padding: 0.45rem 0 0.7rem;
+      border-radius: 8px;
+    }
+
+    .carousel-btn {
+      width: 2rem;
+      height: 2rem;
+      font-size: 1rem;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .carousel-viewport {
+      border-radius: 8px;
+    }
+
+    .carousel-dots {
+      gap: 0.56rem;
+    }
+
+    .carousel-dot {
+      width: 0.68rem;
+      height: 0.68rem;
+      border-color: rgba(16, 42, 67, 0.5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track,
+    .carousel-slide,
+    .carousel-btn,
+    .carousel-dot {
+      transition: none !important;
+    }
+  }
+</style>

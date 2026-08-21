@@ -36,12 +36,14 @@
     </svg>
   </div>
   <ul class="theme-cloud" aria-hidden="true">
-    <li class="theme-tag tag-eco">economie</li>
-    <li class="theme-tag tag-sante">sante</li>
-    <li class="theme-tag tag-education">education</li>
-    <li class="theme-tag tag-emploi">emploi</li>
-    <li class="theme-tag tag-prix">prix</li>
-    <li class="theme-tag tag-energie">energie</li>
+    <li class="theme-tag tag-economie">Economie</li>
+    <li class="theme-tag tag-population">Population</li>
+    <li class="theme-tag tag-societe">Societe</li>
+    <li class="theme-tag tag-sante">Sante</li>
+    <li class="theme-tag tag-education">Education</li>
+    <li class="theme-tag tag-emploi">Emploi</li>
+    <li class="theme-tag tag-conditions">Conditions de vie</li>
+    <li class="theme-tag tag-agriculture">Agriculture</li>
   </ul>
 </aside>
 
@@ -76,25 +78,49 @@
     align-items: center;
     justify-content: center;
     font-family: var(--font-sans);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
+    font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: rgba(16, 42, 67, 0.84);
     background: rgba(247, 245, 240, 0.9);
-    padding: 0.22rem 0.42rem;
+    padding: 0.24rem 0.46rem;
     animation: tag-drift 13s ease-in-out infinite;
+    white-space: nowrap;
   }
 
-  .tag-eco {
-    top: 8%;
+  .theme-tag::before {
+    content: '•';
+    margin-right: 0.35rem;
+    color: var(--color-accent-primary);
+    font-size: 0.95em;
+    line-height: 1;
+  }
+
+  .tag-economie {
+    top: 7%;
     left: -5%;
     transform: rotate(-6deg);
     color: rgba(15, 159, 168, 0.95);
   }
 
+  .tag-population {
+    top: 3%;
+    left: 24%;
+    transform: rotate(2deg);
+    animation-delay: 0.7s;
+  }
+
+  .tag-societe {
+    top: 13%;
+    right: -6%;
+    transform: rotate(-3deg);
+    animation-delay: 1.5s;
+  }
+
   .tag-sante {
-    top: -4%;
-    right: 11%;
+    top: -3%;
+    right: 18%;
     transform: rotate(4deg);
     animation-delay: 1.2s;
   }
@@ -114,14 +140,14 @@
     animation-delay: 3.4s;
   }
 
-  .tag-prix {
-    bottom: -4%;
+  .tag-conditions {
+    bottom: -3%;
     left: 30%;
     transform: rotate(-3deg);
     animation-delay: 1.8s;
   }
 
-  .tag-energie {
+  .tag-agriculture {
     bottom: 6%;
     right: -5%;
     transform: rotate(6deg);
@@ -220,7 +246,7 @@
     }
 
     .theme-tag {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
     }
 
     .line-chart .line-main {
@@ -229,8 +255,58 @@
   }
 
   @media (max-width: 600px) {
-    .theme-cloud {
-      display: none;
+    .data-visual-showcase {
+      width: min(100%, 420px);
+    }
+
+    .showcase-frame {
+      padding-inline: 0;
+    }
+
+    .theme-tag {
+      font-size: 0.63rem;
+      letter-spacing: 0.05em;
+      padding: 0.18rem 0.34rem;
+    }
+
+    .tag-economie {
+      top: -2%;
+      left: -1%;
+    }
+
+    .tag-population {
+      top: -1.5%;
+      left: 34%;
+    }
+
+    .tag-societe {
+      top: 9%;
+      right: -1%;
+    }
+
+    .tag-sante {
+      top: 26%;
+      right: -2%;
+    }
+
+    .tag-education {
+      top: 63%;
+      right: -1%;
+    }
+
+    .tag-emploi {
+      bottom: 20%;
+      left: -1%;
+    }
+
+    .tag-conditions {
+      bottom: 7%;
+      left: 15%;
+    }
+
+    .tag-agriculture {
+      bottom: -1%;
+      right: 1%;
     }
 
     .floating-points circle:nth-child(3),
