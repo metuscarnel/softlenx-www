@@ -113,14 +113,14 @@ a {
 }
 
 .section {
-  padding-top: var(--space-xxl);
-  padding-bottom: var(--space-xxl);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 @media (max-width: 768px) {
   .section {
-    padding-top: var(--space-xl);
-    padding-bottom: var(--space-xl);
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 }
 

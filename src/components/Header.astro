@@ -1,12 +1,10 @@
 ---
-import logoDesktopSrc from '../assets/logos/sl-softlenx-logo.svg';
-import logoMobileSrc from '../assets/logos/sl-logo.svg';
+import logoSrc from '../assets/logos/sl-softlenx-logo.svg';
 ---
 <header id="main-header">
   <div class="container header-container">
     <a href="/" class="header-logo" aria-label="Retour à l'accueil de Softlenx">
-      <img src={logoDesktopSrc.src} alt="Softlenx" class="logo-desktop" />
-      <img src={logoMobileSrc.src} alt="Softlenx" class="logo-mobile" />
+      <img src={logoSrc.src} alt="Softlenx" class="header-logo-image" />
     </a>
     <nav class="header-nav" id="header-nav">
       <ul>
@@ -14,6 +12,7 @@ import logoMobileSrc from '../assets/logos/sl-logo.svg';
         <li><a href="#demarche">La démarche</a></li>
         <li><a href="#thematiques">Les thématiques</a></li>
         <li><a href="#exigences">Nos exigences</a></li>
+        <li><a href="#suivre">Nos infographies</a></li>
       </ul>
     </nav>
     <div class="header-actions">
@@ -97,18 +96,10 @@ import logoMobileSrc from '../assets/logos/sl-logo.svg';
     transition: opacity var(--transition-fast);
   }
 
-  .header-logo img {
+  .header-logo-image {
     display: block;
     width: auto;
-  }
-
-  .header-logo .logo-desktop {
     height: 60px;
-  }
-
-  .header-logo .logo-mobile {
-    display: none;
-    height: 38px;
   }
 
   .header-logo:hover { opacity: 0.8; }
@@ -239,13 +230,8 @@ import logoMobileSrc from '../assets/logos/sl-logo.svg';
 
     .header-cta { display: none; }
 
-    .header-logo .logo-desktop {
-      display: none;
-    }
-
-    .header-logo .logo-mobile {
-      display: block;
-      height: 40px;
+    .header-logo-image {
+      height: 46px;
     }
 
     .menu-toggle {
